@@ -1,17 +1,15 @@
 package Ejemplo.Coche;
 
-import javax.jdo.annotations.Embedded;
-import javax.persistence.Entity;
 import java.io.Serializable;
 
 
-@Entity(name = "cochecito")
+//@Entity(name = "cochecito")
 public class Coche implements Serializable {
 
     private String color;
     private String marca;
 
-    @Embedded
+  //  @Embedded
     private Fabricante fabricante;
 
     public Coche(){

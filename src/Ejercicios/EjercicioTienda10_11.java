@@ -2,7 +2,7 @@ package Ejercicios;
 
 import java.sql.*;
 
-public class EjercicioTienda {
+public class EjercicioTienda10_11 {
     public static void main(String[] args) {
         String url = "jdbc:mariadb://localhost:3306/tienda";
 
@@ -44,10 +44,32 @@ public class EjercicioTienda {
 
 
             //Ejercicio 11 VV
-            String prod1 = "SELECT * FROM producto WHERE pais LIKE 'España'";
-            stm.addBatch(prod1);
+            stm.addBatch("DELETE FROM producto");
+            stm.addBatch("INSERT INTO tienda.producto (id, nombre, descripcion, precio, pais)" +
+                    "VALUES(1, 'Manzana', 'Manzanas Golden', 50, 'Francia'), " +
+                    "(2, 'pera', 'peras conferencia', 25, 'Espana'), (3, 'uva', 'uva gourmet', 30, 'Espana')");
+            stm.addBatch("UPDATE tienda.producto SET precio = 20 WHERE producto.nombre LIKE 'Pera'");
+            stm.addBatch("INSERT INTO tienda.producto (id, nombre, descripcion, precio, pais)" +
+                    "VALUES(4, 'Kiwi', 'Zaspri Gold', 120, 'Nueva Zelanda'), " +
+                    "(5, 'Perito', 'Perito de Tavizna', 18, 'Espana')," +
+                    "(6, 'Platano', 'Platano canario', 40, 'Espana')");
 
-            int[] count = stm.executeBatch();
+            stm.executeBatch();
+
+            String querySelect2 = "SELECT * FROM producto;";
+            ResultSet resultadoTabla2 = stm.executeQuery(querySelect2);
+
+            System.out.println("Resultado ejercicio 11: ");
+            while (resultadoTabla2.next()){
+                System.out.println("•Producto: " + resultadoTabla2.getString("nombre") + " " +
+                        "•Descripcion: " + resultadoTabla2.getString("descripcion") + " " +
+                        "•Precio: " + resultadoTabla2.getString("precio") + " " +
+                        "•Pais: " + resultadoTabla2.getString("pais"));
+            }
+
+            con.commit();
+            stm.close();
+            con.close();
 
             //Ejercicio 11 ^^
 
